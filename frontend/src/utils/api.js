@@ -1,7 +1,9 @@
 import axios from 'axios'
 
+const API_BASE = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : '/api'
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: API_BASE,
   timeout: 15000,
 })
 
@@ -25,7 +27,7 @@ export const updateIncidentStatus = (id, data) => api.patch(`/incidents/${id}/st
 
 export const getReports = (params) => api.get('/reports', { params })
 export const submitReport = (formData) =>
-  axios.post('/api/reports', formData, {
+  axios.post(`${API_BASE}/reports`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   }).then((r) => r.data)
 
